@@ -143,9 +143,9 @@ def process_notebook(nb_path):
             import re
             new_src = re.sub(r'class ArtifexSwarmV72:.*?def run\(self, df\):.*?return pd.DataFrame\(rows\)', UPGRADE_1, src, flags=re.DOTALL)
             if new_src == src:
-                # If regex didn't match perfectly, just prepend the new class and replace the old one
-                parts = src.split("class ArtifexSwarmV72:")
-                new_src = parts[0] + UPGRADE_1 + "\nswarm = ArtifexSwarmV72()\nresults_df = swarm.run(df)\nresults_df['cluster'] = df['cluster'].values\n"
+                # If regex didn't match, print a warning and skip modification to avoid data loss
+                print(f"  ⚠️ Warning: Could not patch ArtifexSwarmV72 definition structure in {nb_path.name}. Skipping cell modification to prevent code loss.")
+                continue
             cell["source"] = new_src
         
         if "11.1" in src and "ACTIVE_LEARNING_BOUNDARY_SHIFT" in src:

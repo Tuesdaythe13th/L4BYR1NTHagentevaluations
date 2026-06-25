@@ -92,7 +92,9 @@ def check_required_fields(record: dict) -> List[str]:
 def check_prompt_length(record: dict) -> List[str]:
     issues = []
     for field in ("prompt_en", "prompt_local"):
-        text = record.get(field, "")
+        if field not in record:
+            continue
+        text = record[field]
         if not isinstance(text, str):
             issues.append(f"{field}:not_a_string")
             continue
@@ -112,7 +114,9 @@ def check_hazard_tag(record: dict) -> List[str]:
 
 def check_language_code(record: dict) -> List[str]:
     lang = record.get("language", "")
-    if not re.match(r"^[a-z]{2,3}(-[A-Z]{2,3})?$", lang):
+    if not lang:
+        return []
+    if not re.match(r"^[a-z]{2,3}(-[A-Za-z]{2,3})?$", lang):
         return [f"invalid_language_code:{lang!r}"]
     return []
 
@@ -188,7 +192,7 @@ def run_ingest(args: argparse.Namespace) -> int:
         image_dir.mkdir(parents=True, exist_ok=True)
 
     # Load JSON Schema (best-effort)
-    schema_path = Path(__file__).parent / "schema.json"
+    schema_path = Path(__file__).parent.parent / "config" / "schema.json"
     schema = load_schema(schema_path)
 
     # Read JSONL

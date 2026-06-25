@@ -1672,7 +1672,8 @@ notebook = {
     "cells": cells
 }
 
-out = "ARTIFEX_v10_Autoevaluator_Architecture.ipynb"
+from pathlib import Path
+out = str(Path(__file__).parent.parent / "notebooks" / "ARTIFEX_v10_Autoevaluator_Architecture.ipynb")
 with open(out, "w", encoding="utf-8") as f:
     json.dump(notebook, f, ensure_ascii=False, indent=1)
 

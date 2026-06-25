@@ -1531,7 +1531,8 @@ nb = {
     "cells": cells,
 }
 
-out = "ARTIFEX_v9_Ethical_Feedback_AILuminate.ipynb"
+from pathlib import Path
+out = str(Path(__file__).parent.parent / "notebooks" / "ARTIFEX_v9_Ethical_Feedback_AILuminate.ipynb")
 with open(out, "w", encoding="utf-8") as f:
     json.dump(nb, f, indent=1, ensure_ascii=False)
 

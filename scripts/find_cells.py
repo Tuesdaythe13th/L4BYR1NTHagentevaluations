@@ -1,6 +1,8 @@
 import json
+from pathlib import Path
 
-with open("ARTIFEX_v7.2_Spanish_Benchmark.ipynb") as f:
+nb_path = Path(__file__).parent.parent / "notebooks" / "ARTIFEX_v7.2_Spanish_Benchmark.ipynb"
+with open(nb_path) as f:
     nb = json.load(f)
 
 for i, cell in enumerate(nb["cells"]):

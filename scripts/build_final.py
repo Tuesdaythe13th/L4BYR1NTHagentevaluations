@@ -1,7 +1,12 @@
 import json
+from pathlib import Path
+
+# Resolve notebook path relative to this script
+notebooks_dir = Path(__file__).parent.parent / "notebooks"
+nb_path = notebooks_dir / "spanish_ailuminate_hf_colab.ipynb"
 
 # Read the previously generated notebook with the script logic
-with open("spanish_ailuminate_hf_colab.ipynb", "r") as f:
+with open(nb_path, "r") as f:
     logic_nb = json.load(f)
 
 # Extract only the code cells from logic_nb (these contain the execution logic)
@@ -272,7 +277,7 @@ final_nb = {
   "nbformat_minor": 5
 }
 
-with open("spanish_ailuminate_hf_colab.ipynb", "w") as f:
+with open(nb_path, "w") as f:
     json.dump(final_nb, f, indent=2)
 
 print("Notebook generated successfully!")
